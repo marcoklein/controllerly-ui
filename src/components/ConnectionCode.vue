@@ -1,11 +1,13 @@
 <template lang="pug">
-div
+//div.row.align-self-center Centered
+  div.col-sm-12.my-auto
+div.row.justify-content-center.align-self-center
   h1 Enter a Connection Code
   input(v-on:keyup.enter="connect" v-model='options.connectionCode', placeholder='Connection code')
   button(v-on:click='connect') Connect
   div(v-if='options.connectionTries > 0') Error: 
     span(v-if='options.connectionError') {{ options.connectionError }}
-
+  
 </template>
 
 <script lang="ts">
@@ -40,3 +42,5 @@ export default class ConnectionCode extends Vue {
 }
 
 </script>
+<style scoped>
+</style>

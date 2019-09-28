@@ -1,5 +1,5 @@
 <template lang="pug">
-div
+div.container.d-flex.h-100
   // show connection page if there is no client (client undefined)
   ConnectionCode(v-if='client.isDisconnected', v-bind:client='client', v-bind:options='options')
   // show other screens only if there is a client
@@ -53,6 +53,10 @@ export default class App extends Vue {
 </script>
 
 <style>
+html, body {
+  height: 100%;
+  width: 100%;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
