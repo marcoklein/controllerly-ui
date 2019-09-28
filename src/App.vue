@@ -1,5 +1,5 @@
 <template lang="pug">
-div.container.d-flex.h-100
+div.fullsize
   // show connection page if there is no client (client undefined)
   ConnectionCode(v-if='client.isDisconnected', v-bind:client='client', v-bind:options='options')
   // show other screens only if there is a client
@@ -53,7 +53,7 @@ export default class App extends Vue {
 </script>
 
 <style>
-html, body {
+html, body, .fullsize {
   height: 100%;
   width: 100%;
 }

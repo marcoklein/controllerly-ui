@@ -1,12 +1,18 @@
 <template lang="pug">
-//div.row.align-self-center Centered
-  div.col-sm-12.my-auto
-div.row.justify-content-center.align-self-center
-  h1 Enter a Connection Code
-  input(v-on:keyup.enter="connect" v-model='options.connectionCode', placeholder='Connection code')
-  button(v-on:click='connect') Connect
-  div(v-if='options.connectionTries > 0') Error: 
-    span(v-if='options.connectionError') {{ options.connectionError }}
+// TODO use jquery to align content!
+div.container.d-flex.h-100
+  div.row.justify-content-center.align-self-center.w-100
+    div.col-12
+      h2.text-center Enter a Connection Code
+      div.input-group
+        input.form-control(maxLength="5" v-on:keyup.enter="connect" @input="onConnectionCodeChange" v-model='options.connectionCode', placeholder='Connection code')
+        div.input-group-append
+          button.btn.btn-primary(
+            v-on:click='connect'
+            v-bind:class=" { disabled: options.connectionCode.length < 5 }")
+            | Connect
+      div(v-if='options.connectionTries > 0') Error: 
+        span(v-if='options.connectionError') {{ options.connectionError }}
   
 </template>
 
@@ -22,7 +28,6 @@ import { ControllerlyClient } from 'controllerly-core';
 export default class ConnectionCode extends Vue {
   @Prop() private client!: ControllerlyClient;
   @Prop() private options!: GamepadOptions;
-  private connectionCode: string = '';
 
   constructor() {
       super();
@@ -30,6 +35,19 @@ export default class ConnectionCode extends Vue {
 
   private created() {
     // nothing
+  }
+
+  /**
+   * Updated everytime the connection code input field changes.
+   * Automatically connects if there are 5 characters.
+   */
+  private onConnectionCodeChange() {
+    console.log('on change');
+    // always convert to uppercase
+    this.options.connectionCode = this.options.connectionCode.toUpperCase();
+    if (this.options.connectionCode.length >= 5) {
+      this.connect();
+    }
   }
 
   private connect() {
