@@ -1,17 +1,16 @@
 $splitPadding: 1px;
-$borderColor: black;
+$borderColor: rgb(173, 191, 230);
 $borderStyle: solid;
+$borderRadius: 4px;
 
 #gamepadLayout {
+    background-color: $borderColor;
+    
+    
     /* A gamepad layout has various areas that represent
     button areas */
     .area {
         position: absolute;
-
-        /* All pressed inputs */
-        .input.pressed {
-
-        }
 
         /* Vertically split next two childs */
         &.v-split {
@@ -19,7 +18,6 @@ $borderStyle: solid;
                 position: absolute;
                 width: 50%;
                 height: 100%;
-                background-color: orange;
             }
             // left side
             >:nth-child(1) {
@@ -28,6 +26,7 @@ $borderStyle: solid;
                 border-right-color: $borderColor;
                 border-right-style: $borderStyle;
                 border-right-width: $splitPadding;
+                border-radius: $borderRadius;
             }
             // right side
             >:nth-child(2) {
@@ -36,6 +35,7 @@ $borderStyle: solid;
                 border-left-color: $borderColor;
                 border-left-style: $borderStyle;
                 border-left-width: $splitPadding;
+                border-radius: $borderRadius;
             }
         }
 
@@ -45,7 +45,6 @@ $borderStyle: solid;
                 position: absolute;
                 width: 100%;
                 height: 50%; // both are of 50% height
-                background-color: orange;
             }
             // top child
             >:nth-child(1) {
@@ -53,6 +52,7 @@ $borderStyle: solid;
                 border-bottom-color: $borderColor;
                 border-bottom-style: $borderStyle;
                 border-bottom-width: $splitPadding;
+                border-radius: $borderRadius;
             }
             // bottom child
             >:nth-child(2) {
@@ -60,15 +60,46 @@ $borderStyle: solid;
                 border-top-color: $borderColor;
                 border-top-style: $borderStyle;
                 border-top-width: $splitPadding;
+                border-radius: $borderRadius;
             }
         }
     }
+    
+    .input {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        white-space: nowrap; // no text break
+        text-overflow: clip; // deactivate overflow
+
+        // unpressed background color
+        background-color: lightblue;
+
+        
+        // vertically align content
+        vertical-align: middle;
+        &:before {
+            content: "";
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+        }
+
+        
+        /* All pressed inputs */
+        &.pressed {
+            background-color: blue;
+        }
+    }
+
+
     .left {
         position: absolute;
         width: 45%;
         height: 100%;
         left: 0;
-        background-color: red;
+        //background-color: red;
 
     }
     .center {
@@ -88,7 +119,7 @@ $borderStyle: solid;
         width: 45%;
         height: 100%;
         right: 0;
-        background-color: red;
+        //background-color: red;
     }
 
 }

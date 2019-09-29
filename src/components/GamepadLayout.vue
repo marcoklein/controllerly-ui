@@ -1,16 +1,14 @@
 <template lang="pug">
 div.fullsize#gamepadLayout
   div.left.v-split.area
-    div.input
-    div.area.h-split
-      div.input
-      div.input
+    div.input Left
+    div.input Right
   div.center.h-split.area
-    div.input
-    div.input
+    div.input Start
+    div.input Select
   div.right.h-split.area
-    div.input
-    div.input
+    div.input B
+    div.input A
 
 </template>
 <script lang="ts">
