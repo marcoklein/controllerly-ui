@@ -1,8 +1,16 @@
 <template lang="pug">
-div.fullsize
-  div.left
-  div.center
-  div.right
+div.fullsize#gamepadLayout
+  div.left.v-split.area
+    div.input
+    div.area.h-split
+      div.input
+      div.input
+  div.center.h-split.area
+    div.input
+    div.input
+  div.right.h-split.area
+    div.input
+    div.input
 
 </template>
 <script lang="ts">
@@ -21,25 +29,4 @@ export default class GamepadLayout extends Vue {
 
 </script>
 <style scoped>
-.left {
-  position: absolute;
-  width: 40%;
-  height: 100%;
-  left: 0;
-  background-color: red;
-}
-.center {
-  position: absolute;
-  width: 20%;
-  height: 100%;
-  left: 40%;
-  background-color: green;
-}
-.right {
-  position: absolute;
-  width: 40%;
-  height: 100%;
-  right: 0;
-  background-color: red;
-}
 </style>
