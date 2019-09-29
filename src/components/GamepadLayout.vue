@@ -1,14 +1,14 @@
 <template lang="pug">
 div.fullsize#gamepadLayout
   div.left.v-split.area
-    div.input Left
-    div.input Right
+    div.input.v-align Left
+    div.input.v-align Right
   div.center.h-split.area
-    div.input Start
-    div.input Select
+    div.input.v-align Start
+    div.input.v-align Select
   div.right.h-split.area
-    div.input B
-    div.input A
+    div.input.v-align B
+    div.input.v-align A
 
 </template>
 <script lang="ts">
@@ -26,5 +26,5 @@ export default class GamepadLayout extends Vue {
 }
 
 </script>
-<style scoped>
+<style lang="scss" scoped>
 </style>

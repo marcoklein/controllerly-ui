@@ -1,4 +1,29 @@
 // include bootstrap
 @import 'node_modules/bootstrap/scss/bootstrap.scss';
 
-@import './gamepadLayout.scss'
+@import './gamepadLayout.scss';
+
+
+html, body, .fullsize {
+    height: 100%;
+    width: 100%;
+}
+
+* {
+    // no text selection
+    -webkit-user-select: none; /* Chrome all / Safari all */
+    -moz-user-select: none;   /* Firefox all */
+    -ms-user-select: none;  /* IE 10+ */
+    user-select: none;  /* Likely future */ 
+}
+
+.v-align {
+    // vertically align content
+    vertical-align: middle;
+    &:before {
+        content: "";
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+    }
+}

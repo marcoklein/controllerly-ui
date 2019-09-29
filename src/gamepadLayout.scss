@@ -76,17 +76,6 @@ $borderRadius: 4px;
         // unpressed background color
         background-color: lightblue;
 
-        
-        // vertically align content
-        vertical-align: middle;
-        &:before {
-            content: "";
-            display: inline-block;
-            height: 100%;
-            vertical-align: middle;
-        }
-
-        
         /* All pressed inputs */
         &.pressed {
             background-color: blue;
