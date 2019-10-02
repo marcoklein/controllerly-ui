@@ -1,7 +1,7 @@
 <template lang="pug">
 div.fullsize
   // show connection page if there is no client (client undefined)
-  ConnectionCode(v-if='client.isDisconnected', v-bind:client='client', v-bind:options='options')
+  Gamepad(v-if='client.isDisconnected', v-bind:client='client', v-bind:options='options')
   // show other screens only if there is a client
 
   // show connecting if the ui is currently on state CONNECTING
@@ -53,10 +53,6 @@ export default class App extends Vue {
 </script>
 
 <style>
-html, body, .fullsize {
-  height: 100%;
-  width: 100%;
-}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

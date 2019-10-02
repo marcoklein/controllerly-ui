@@ -3,6 +3,10 @@ Intuitive Smartphone Gamepad User Interface for Controllerly.
 
 The front-end leverages pure HTML power to save energy and be as thin as possible.
 
+## Custom Layouts
+The Gamepad Layout component is configured with a Layout Configuration. It allows the easy setup of grid based input systems.
+The layout configuration can split views in half and provides a divider option that allows users to dynamically adjust button sizes.
+
 ## Create Your Own Front-End
 
 ## Testing
