@@ -1,4 +1,4 @@
-![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/marcoklein/controllerly-ui)
+[![Known Vulnerabilities](https://snyk.io//test/github/marcoklein/controllerly-ui/badge.svg?targetFile=package.json)](https://snyk.io//test/github/marcoklein/controllerly-ui?targetFile=package.json)
 
 # Controllerly-UI
 Intuitive Smartphone Gamepad User Interface for Controllerly.
