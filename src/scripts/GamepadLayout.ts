@@ -137,7 +137,10 @@ export default class GamepadLayout extends Vue {
      * Each touch has a unique identifier, directly mapped to a certain button id.
      */
     private lastButtonTouches: { [identifier: number]: string } = {};
-
+    /**
+     * Locked sliders, that are currently being dragged.
+     */
+    private movingSliders: { [identifier: number]: { lastX: number, lastY: number, element: Element }} = {};
 
     public mounted() {
         // trigger initial adjusting value
@@ -227,6 +230,26 @@ export default class GamepadLayout extends Vue {
     private handlePointerDown(x: number, y: number, identifier: number) {
         // find touched element
         const element = document.elementFromPoint(x, y);
+
+        if (this.movingSliders[identifier]) {
+            // locked -> but should not call this function
+            // probably pointerUp hasn't been called properly
+            return;
+        } else if (element && this.adjusting) {
+            // check if a slider is touched
+            const $element = $(element);
+            if ($element.hasClass('h-slider')) {
+                console.log('v-slider down');
+                // lock slider of identifier
+                this.movingSliders[identifier] = {
+                    lastX: x,
+                    lastY: y,
+                    element: element
+                };
+            }
+            return;
+        }
+
         // extract button info
         const buttonName = !element ? null : element.getAttribute('button-name');
 
@@ -248,13 +271,46 @@ export default class GamepadLayout extends Vue {
 
     private handlePointerMove(x: number, y: number, identifier: number) {
         // TODO implement swipe behavior
-        this.handlePointerDown(x, y, identifier);
+        //this.handlePointerDown(x, y, identifier);
+        const movingSlider = this.movingSliders[identifier];
+        if (movingSlider) {
+            const $element = $(movingSlider.element);
+            // get drag delta
+            const deltaX = movingSlider.lastX - x;
+            const deltaY = movingSlider.lastY - y;
+
+            // get parent areas
+            const parent = $element.parent().parent();
+            const firstChild = parent.children().eq(0);
+            const secondChild = parent.children().eq(1);
+
+            // set area width
+            if ($element.hasClass('h-slider')) {
+                console.log(firstChild.html());
+                console.log(firstChild.width());
+                console.log(deltaX);
+                // @ts-ignore
+                firstChild.width(firstChild.width() - deltaX);
+                // @ts-ignore
+                secondChild.width(secondChild.width() + deltaX);
+            }
+            //$element.css('left', deltaX);
+            //$element.css('top', deltaY);
+
+            movingSlider.lastX = x;
+            movingSlider.lastY = y;
+
+        }
     }
 
     /**
      * Mouse or touch as been released.
      */
     private handlePointerUp(identifier: number) {
+        if (this.movingSliders[identifier]) {
+            // release slider
+            delete this.movingSliders[identifier];
+        }
         // uncheck the last button if existing
         const lastButton = this.lastButtonTouches[identifier];
         if (lastButton) {
@@ -271,7 +327,7 @@ export default class GamepadLayout extends Vue {
 
     private leftButtonMouseMove(event: MouseEvent) {
         if (event.which >= 1) {
-            //this.handlePointerDown(event.clientX, event.clientY, 0);
+            this.handlePointerMove(event.clientX, event.clientY, 0);
         }
     }
     private leftButtonMouseUp() {
