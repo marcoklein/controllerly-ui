@@ -52,7 +52,10 @@ export default class ConnectionCode extends Vue {
 
   private connect() {
     this.options.connectionTries++;
-    this.client.connect(this.options.connectionCode).catch((err) => {
+    this.client.connect(this.options.connectionCode).then(() => {
+      console.log('connection successfull');
+    }).catch((err) => {
+      console.error(err);
       this.options.connectionError = err;
     });
   }

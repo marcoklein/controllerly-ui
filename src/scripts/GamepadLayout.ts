@@ -6,7 +6,13 @@ import { LayoutConfig, layoutConfigToHtml } from './LayoutConfig';
 import $ from 'jquery';
 import LayoutButton from '../components/layout/LayoutButton.vue';
 
-export enum BUTTON_EVENT_TYPE {
+/**
+ * Name of fired button event.
+ * Listen to it with v-on:button-event.
+ */
+export const EVENT_BUTTON_EVENT: string = 'button-event';
+
+export enum ButtonEventType {
     ACTIVE = 'active',
     INACTIVE = 'inactive',
     /**
@@ -20,24 +26,19 @@ export enum BUTTON_EVENT_TYPE {
     SWIPE_DOWN = 'swipeDown'
 }
 
-/**
- * Name of fired button event.
- * Listen to it with v-on:button-event.
- */
-export const EVENT_BUTTON_EVENT: string = 'button-event';
-export type EVENT_BUTTON_TYPE = {
+export type ButtonEvent = {
     /**
      * Name of the button.
      */
     name: string;
-    type: BUTTON_EVENT_TYPE;
+    type: ButtonEventType;
     pressed: boolean;
     timestamp: number;
 };
 /**
  * Event button type.
  */
-export function createButtonEvent(name: string, type: BUTTON_EVENT_TYPE, pressed: boolean): EVENT_BUTTON_TYPE {
+export function createButtonEvent(name: string, type: ButtonEventType, pressed: boolean): ButtonEvent {
     return {
         name,
         type,
@@ -157,14 +158,14 @@ export default class GamepadLayout extends Vue {
             if (!hasPressedClass) { // only emit event if there are two different events
                 // switch to pressed
                 buttonEl.addClass(PRESSED_CLASS_NAME);
-                const buttonEvent = createButtonEvent(buttonName, BUTTON_EVENT_TYPE.ACTIVE, true);
+                const buttonEvent = createButtonEvent(buttonName, ButtonEventType.ACTIVE, true);
                 this.$emit(EVENT_BUTTON_EVENT, buttonEvent);
             }
         } else {
             if (hasPressedClass) {
                 // switch to unpressed
                 buttonEl.removeClass(PRESSED_CLASS_NAME);
-                const buttonEvent = createButtonEvent(buttonName, BUTTON_EVENT_TYPE.INACTIVE, false);
+                const buttonEvent = createButtonEvent(buttonName, ButtonEventType.INACTIVE, false);
                 this.$emit(EVENT_BUTTON_EVENT, buttonEvent);
             }
         }

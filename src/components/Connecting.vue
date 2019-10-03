@@ -5,6 +5,7 @@ div.container.d-flex.h-100
       h3(v-if='!reconnecting') Connecting to
       h3(v-if='reconnecting') Reconnecting to
       h2 {{ options.connectionCode }}
+      h3 ...
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';

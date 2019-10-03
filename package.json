@@ -35,7 +35,7 @@
   ],
   "dependencies": {
     "bootstrap": "^4.3.1",
-    "controllerly-core": "^0.3.0",
+    "controllerly-core": "^0.3.1",
     "jquery": "^3.4.1",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10"
