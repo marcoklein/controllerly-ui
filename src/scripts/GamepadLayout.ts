@@ -231,7 +231,7 @@ export default class GamepadLayout extends Vue {
     private onTouchStart(event: TouchEvent) {
         event.preventDefault();
         for (let i = 0; i < event.changedTouches.length; i++) {
-            let touch = event.changedTouches[i];
+            const touch = event.changedTouches[i];
             this.handlePointerDown(touch.pageX, touch.pageY, touch.identifier);
         }
     }
@@ -239,7 +239,7 @@ export default class GamepadLayout extends Vue {
     private onTouchMove(event: TouchEvent) {
         event.preventDefault();
         for (let i = 0; i < event.changedTouches.length; i++) {
-            let touch = event.changedTouches[i];
+            const touch = event.changedTouches[i];
             this.handlePointerMove(touch.pageX, touch.pageY, touch.identifier);
         }
     }
@@ -247,7 +247,7 @@ export default class GamepadLayout extends Vue {
     private onTouchEnd(event: TouchEvent) {
         event.preventDefault();
         for (let i = 0; i < event.changedTouches.length; i++) {
-            let touch = event.changedTouches[i];
+            const touch = event.changedTouches[i];
             this.handlePointerUp(touch.identifier);
         }
     }

@@ -9,7 +9,7 @@ div.fullsize
 
 </template>
 <script lang="ts">
-import Gamepad from '../scripts/Gamepad.ts';
+import Gamepad from '../scripts/Gamepad';
 export default Gamepad;
 
 </script>

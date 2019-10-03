@@ -39,8 +39,8 @@ export default class App extends Vue {
     super();
 
     // test server
-    //const server: ControllerlyServer = new ControllerlyServer();
-    //server.start('ui-test');
+    // const server: ControllerlyServer = new ControllerlyServer();
+    // server.start('ui-test');
   }
 
   private created() {
