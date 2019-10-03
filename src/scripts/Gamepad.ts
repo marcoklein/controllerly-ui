@@ -16,7 +16,7 @@ export default class Gamepad extends Vue {
   @Prop() private client!: ControllerlyClient;
   @Prop() private options!: GamepadOptions;
 
-  private adjusting: boolean = false;
+  private adjusting: boolean = true;
 
   /**
    * The Gamepad component fired a button event.

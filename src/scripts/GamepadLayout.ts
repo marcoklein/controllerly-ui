@@ -1,5 +1,5 @@
 
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { GamepadOptions } from '../GamepadOptions';
 import { ControllerlyClient } from 'controllerly-core';
 import { LayoutConfig, layoutConfigToHtml } from './LayoutConfig';
@@ -65,6 +65,7 @@ export default class GamepadLayout extends Vue {
      * As long as adjusting is true, the user can adjust the gamepad layout.
      */
     @Prop() public adjusting!: boolean;
+
 
     /**
      * Layout configuration the gamepad is based on.
@@ -138,11 +139,55 @@ export default class GamepadLayout extends Vue {
     private lastButtonTouches: { [identifier: number]: string } = {};
 
 
+    public mounted() {
+        // trigger initial adjusting value
+        this.onAdjustChange(this.adjusting, !this.adjusting);
+    }
+
     /**
      * Creates html from the gamepad layout configuration.
      */
     public get layoutHtml(): string {
         return layoutConfigToHtml(this.layoutConfig);
+    }
+
+    /* Dynamic adjusting */
+    
+    @Watch('adjusting')
+    private onAdjustChange(val: boolean, oldVal: boolean) {
+        console.log('adjusting changed ', val);
+        if (val) {
+            this.enableAdjusting();
+        } else {
+            this.disableAdjusting();
+        }
+    }
+
+    private enableAdjusting() {
+        // add slider for all vertical splits on left side
+        let vSplits = $('#gamepadLayout .v-split');
+        console.log(vSplits);
+        // add slider between first and second child
+        // positioning is defined in gamepad-layout.scss
+        const secondChild = vSplits.children().eq(1);
+        // add slider on second child to adjust width
+        let hSlider = $('<div>');
+        hSlider.addClass('h-slider');
+        secondChild.append(hSlider);
+
+        // add slider
+        let hSplits = $('#gamepadLayout .h-split');
+        hSplits.each(function() {
+            const secondVChild = $(this).children().eq(1);
+            let vSlider = $('<div>');
+            vSlider.addClass('v-slider');
+            secondVChild.append(vSlider);
+        });
+    }
+
+    private disableAdjusting() {
+        $('#gamepadLayout .v-slider').remove();
+        $('#gamepadLayout .h-slider').remove();
     }
 
     /* Input handling */
@@ -226,7 +271,7 @@ export default class GamepadLayout extends Vue {
 
     private leftButtonMouseMove(event: MouseEvent) {
         if (event.which >= 1) {
-            this.handlePointerDown(event.clientX, event.clientY, 0);
+            //this.handlePointerDown(event.clientX, event.clientY, 0);
         }
     }
     private leftButtonMouseUp() {
