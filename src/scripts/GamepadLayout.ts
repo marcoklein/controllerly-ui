@@ -7,15 +7,17 @@ import $ from 'jquery';
 import LayoutButton from '../components/layout/LayoutButton.vue';
 
 export enum BUTTON_EVENT_TYPE {
+    ACTIVE = 'active',
+    INACTIVE = 'inactive',
     /**
      * A short tap.
      */
-    TAP,
-    LONGPRESS,
-    SWIPE_UP,
-    SWIPE_LEFT,
-    SWIPE_RIGHT,
-    SWIPE_DOWN
+    TAP = 'tap',
+    LONGPRESS = 'longPress',
+    SWIPE_UP = 'swipeUp',
+    SWIPE_LEFT = 'swipeLeft',
+    SWIPE_RIGHT = 'swipeRight',
+    SWIPE_DOWN = 'swipeDown'
 }
 
 /**
@@ -155,14 +157,14 @@ export default class GamepadLayout extends Vue {
             if (!hasPressedClass) { // only emit event if there are two different events
                 // switch to pressed
                 buttonEl.addClass(PRESSED_CLASS_NAME);
-                const buttonEvent = createButtonEvent(buttonName, BUTTON_EVENT_TYPE.TAP, true);
+                const buttonEvent = createButtonEvent(buttonName, BUTTON_EVENT_TYPE.ACTIVE, true);
                 this.$emit(EVENT_BUTTON_EVENT, buttonEvent);
             }
         } else {
             if (hasPressedClass) {
                 // switch to unpressed
                 buttonEl.removeClass(PRESSED_CLASS_NAME);
-                const buttonEvent = createButtonEvent(buttonName, BUTTON_EVENT_TYPE.TAP, false);
+                const buttonEvent = createButtonEvent(buttonName, BUTTON_EVENT_TYPE.INACTIVE, false);
                 this.$emit(EVENT_BUTTON_EVENT, buttonEvent);
             }
         }

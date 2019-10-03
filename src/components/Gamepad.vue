@@ -9,32 +9,8 @@ div.fullsize
 
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import { GamepadOptions } from '../GamepadOptions';
-import { ControllerlyClient } from 'controllerly-core';
-import GamepadLayout from './GamepadLayout.vue';
-
-/**
- * User enters the connection code that the server provides.
- */
-@Component({
-    components: {
-        GamepadLayout
-    }
-})
-export default class Gamepad extends Vue {
-  @Prop() private client!: ControllerlyClient;
-  @Prop() private options!: GamepadOptions;
-
-
-  /**
-   * The Gamepad component fired a button event.
-   */
-  onButtonEvent(event: any) {
-    console.log('button event', event);
-  }
-  
-}
+import Gamepad from '../scripts/Gamepad.ts';
+export default Gamepad;
 
 </script>
 <style lang="scss" scoped>
