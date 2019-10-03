@@ -12,7 +12,7 @@ import { GamepadOptions } from '../GamepadOptions';
 import { ControllerlyClient } from 'controllerly-core';
 
 /**
- * User enters the connection code that the server provides.
+ * Screen active as long as the client is connecting or reconnecting to the server.
  */
 @Component
 export default class Connecting extends Vue {

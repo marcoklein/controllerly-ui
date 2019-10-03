@@ -6,8 +6,49 @@ import { LayoutConfig, layoutConfigToHtml } from './LayoutConfig';
 import $ from 'jquery';
 import LayoutButton from '../components/layout/LayoutButton.vue';
 
+export enum BUTTON_EVENT_TYPE {
+    /**
+     * A short tap.
+     */
+    TAP,
+    LONGPRESS,
+    SWIPE_UP,
+    SWIPE_LEFT,
+    SWIPE_RIGHT,
+    SWIPE_DOWN
+}
+
 /**
- * User enters the connection code that the server provides.
+ * Name of fired button event.
+ * Listen to it with v-on:button-event.
+ */
+export const EVENT_BUTTON_EVENT: string = 'button-event';
+export type EVENT_BUTTON_TYPE = {
+    /**
+     * Name of the button.
+     */
+    name: string;
+    type: BUTTON_EVENT_TYPE;
+    pressed: boolean;
+    timestamp: number;
+};
+/**
+ * Event button type.
+ */
+export function createButtonEvent(name: string, type: BUTTON_EVENT_TYPE, pressed: boolean): EVENT_BUTTON_TYPE {
+    return {
+        name,
+        type,
+        pressed,
+        timestamp: Date.now()
+    }
+}
+
+/**
+ * Script part of the Gamepad.vue component.
+ * It creates and provides a gamepad layout and fires a button-event on button updates.
+ * 
+ * Parent components can listen to the button events and process them accordingly.
  */
 @Component({
     components: {
@@ -106,11 +147,24 @@ export default class GamepadLayout extends Vue {
      * @param pressed Pressed state.
      */
     private changeButtonState(buttonName: string, pressed: boolean) {
+        // TODO cache buttons within object
         const buttonEl = $(`#gamepadLayout [button-name="${buttonName}"]`);
+        const PRESSED_CLASS_NAME = 'pressed';
+        const hasPressedClass = buttonEl.hasClass(PRESSED_CLASS_NAME);
         if (pressed) {
-            buttonEl.addClass('pressed');
+            if (!hasPressedClass) { // only emit event if there are two different events
+                // switch to pressed
+                buttonEl.addClass(PRESSED_CLASS_NAME);
+                const buttonEvent = createButtonEvent(buttonName, BUTTON_EVENT_TYPE.TAP, true);
+                this.$emit(EVENT_BUTTON_EVENT, buttonEvent);
+            }
         } else {
-            buttonEl.removeClass('pressed');
+            if (hasPressedClass) {
+                // switch to unpressed
+                buttonEl.removeClass(PRESSED_CLASS_NAME);
+                const buttonEvent = createButtonEvent(buttonName, BUTTON_EVENT_TYPE.TAP, false);
+                this.$emit(EVENT_BUTTON_EVENT, buttonEvent);
+            }
         }
     }
 
