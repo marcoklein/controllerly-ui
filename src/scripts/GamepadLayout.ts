@@ -61,6 +61,10 @@ export function createButtonEvent(name: string, type: ButtonEventType, pressed: 
 export default class GamepadLayout extends Vue {
     @Prop() private client!: ControllerlyClient;
     @Prop() private options!: GamepadOptions;
+    /**
+     * As long as adjusting is true, the user can adjust the gamepad layout.
+     */
+    @Prop() public adjusting!: boolean;
 
     /**
      * Layout configuration the gamepad is based on.
