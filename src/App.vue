@@ -1,7 +1,7 @@
 <template lang="pug">
 div.fullsize
   // show connection page if there is no client (client undefined)
-  Gamepad(v-if='client.isDisconnected', v-bind:client='client', v-bind:options='options')
+  ConnectionCode(v-if='client.isDisconnected', v-bind:client='client', v-bind:options='options')
   // show other screens only if there is a client
 
   // show connecting if the ui is currently on state CONNECTING

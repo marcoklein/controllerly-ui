@@ -2,9 +2,9 @@
 div.container.d-flex.h-100
   div.row.justify-content-center.align-self-center.w-100
     div.col-12
-      h2(v-if='!reconnecting') Connecting...
-      h2(v-if='reconnecting') Reconnecting...
-      h3 to {{ options.connectionCode }}
+      h3(v-if='!reconnecting') Connecting to
+      h3(v-if='reconnecting') Reconnecting to
+      h2 {{ options.connectionCode }}
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
