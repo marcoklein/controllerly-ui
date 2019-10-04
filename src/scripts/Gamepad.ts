@@ -18,15 +18,25 @@ export default class Gamepad extends Vue {
 
   private adjusting: boolean = true;
 
+  private created() {
+    // prevent the context menu to show up
+    // this might happen on long touch presses
+    window.oncontextmenu = function(event: any) {
+      event.preventDefault();
+      event.stopPropagation();
+      return false;
+  };
+  }
+
   /**
    * The Gamepad component fired a button event.
    */
-  onButtonEvent(event: ButtonEvent) {
+  private onButtonEvent(event: ButtonEvent) {
     // send button event
     // this.client.sendMessage('buttonEvent', event);
   }
 
-  toggleAdjustLock() {
+  private toggleAdjustLock() {
     this.adjusting = !this.adjusting;
   }
   
