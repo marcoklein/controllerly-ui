@@ -6,6 +6,10 @@ html, body, .fullsize {
     height: 100%;
     width: 100%;
 }
+html, body {
+    /* Disable scrolling */
+    overflow: hidden;
+}
 
 * {
     // no text selection
