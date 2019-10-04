@@ -140,7 +140,7 @@ export default class GamepadLayout extends Vue {
     /**
      * Locked sliders, that are currently being dragged.
      */
-    private movingSliders: { [identifier: number]: { lastX: number, lastY: number, element: Element }} = {};
+    private movingSliders: { [identifier: number]: { startPosition: number, startX: number, startY: number, element: Element }} = {};
 
     public mounted() {
         // trigger initial adjusting value
@@ -239,11 +239,14 @@ export default class GamepadLayout extends Vue {
             // check if a slider is touched
             const $element = $(element);
             if ($element.hasClass('h-slider')) {
-                console.log('v-slider down');
+                let $area = $element.parent().parent();
+                let firstWidth = $area.children().eq(0).width() || 0;
+                let parentWidth = $area.width() || 0;
                 // lock slider of identifier
                 this.movingSliders[identifier] = {
-                    lastX: x,
-                    lastY: y,
+                    startPosition: firstWidth / parentWidth,
+                    startX: x,
+                    startY: y,
                     element: element
                 };
             }
@@ -276,8 +279,8 @@ export default class GamepadLayout extends Vue {
         if (movingSlider) {
             const $element = $(movingSlider.element);
             // get drag delta
-            const deltaX = movingSlider.lastX - x;
-            const deltaY = movingSlider.lastY - y;
+            const deltaX = x - movingSlider.startX;
+            const deltaY = y - movingSlider.startY;
 
             // get parent areas
             const parent = $element.parent().parent();
@@ -286,19 +289,27 @@ export default class GamepadLayout extends Vue {
 
             // set area width
             if ($element.hasClass('h-slider')) {
-                console.log(firstChild.html());
-                console.log(firstChild.width());
-                console.log(deltaX);
-                // @ts-ignore
-                firstChild.width(firstChild.width() - deltaX);
-                // @ts-ignore
-                secondChild.width(secondChild.width() + deltaX);
+                let parentWidth = parent.width() || 0;
+                let percentageDelta = deltaX / parentWidth;
+                // calculate new divider position
+                let firstChildWidth = movingSlider.startPosition + percentageDelta;
+                // min and max percentages
+                if (firstChildWidth < 0.1) {
+                    firstChildWidth = 0.1;
+                } else if (firstChildWidth > 0.9) {
+                    firstChildWidth = 0.9;
+                }
+                // convert to percent
+                firstChildWidth *= 100;
+                // set width
+                firstChild.css('width', firstChildWidth + '%');
+                secondChild.css('width', (100 - firstChildWidth) + '%');
             }
             //$element.css('left', deltaX);
             //$element.css('top', deltaY);
 
-            movingSlider.lastX = x;
-            movingSlider.lastY = y;
+            //movingSlider.startX = x;
+            //movingSlider.startY = y;
 
         }
     }

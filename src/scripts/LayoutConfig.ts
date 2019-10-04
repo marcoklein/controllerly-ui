@@ -136,4 +136,5 @@ export interface ContainerDivider {
      * Position of divider in percent.
      */
     initialPosition: number;
+    position?: number;
 }
