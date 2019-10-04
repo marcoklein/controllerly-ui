@@ -138,6 +138,10 @@ export default class GamepadLayout extends Vue {
      */
     private lastButtonTouches: { [identifier: number]: string } = {};
     /**
+     * Map off pointers that are currently pressed.
+     */
+    private pressedPointers: { [identifier: number]: boolean } = {};
+    /**
      * Locked sliders, that are currently being dragged.
      */
     private movingSliders: { [identifier: number]: { verticalPosition: number, horizontalPosition: number, startX: number, startY: number, element: Element }} = {};
@@ -226,6 +230,7 @@ export default class GamepadLayout extends Vue {
      * Handles and updates the pressed state of all buttons.
      */
     private handlePointerDown(x: number, y: number, identifier: number) {
+        this.pressedPointers[identifier] = true;
         // find touched element
         const element = document.elementFromPoint(x, y);
 
@@ -251,6 +256,7 @@ export default class GamepadLayout extends Vue {
                     startY: y,
                     element: element
                 };
+                return;
             } else if ($element.hasClass('v-slider')) {
                 // lock slider of identifier
                 this.movingSliders[identifier] = {
@@ -260,8 +266,11 @@ export default class GamepadLayout extends Vue {
                     startY: y,
                     element: element
                 };
+                return;
+            } else {
+                // no slider has been selected
+                // check if button has been pressed
             }
-            return;
         }
 
         // extract button info
@@ -284,10 +293,15 @@ export default class GamepadLayout extends Vue {
     }
 
     private handlePointerMove(x: number, y: number, identifier: number) {
-        // TODO implement swipe behavior
-        //this.handlePointerDown(x, y, identifier);
+        if (!this.pressedPointers[identifier]) {
+            // pointer is not pressed
+            // FIXME on mouse events: if user leaves window it is not recognized by the pointer up event
+            return;
+        }
         const movingSlider = this.movingSliders[identifier];
         if (movingSlider) {
+            // locked on slider
+            // update slider drag
             const $element = $(movingSlider.element);
             // get drag delta
             const deltaX = x - movingSlider.startX;
@@ -334,7 +348,30 @@ export default class GamepadLayout extends Vue {
                 firstChild.css('height', firstChildHeight + '%');
                 secondChild.css('height', (100 - firstChildHeight) + '%');
             }
+        } else {
+            // TODO implement swipe behavior
+            // handle button change
+            
+            // find touched element
+            const element = document.elementFromPoint(x, y);
 
+            // extract button info
+            const buttonName = !element ? null : element.getAttribute('button-name');
+
+            // uncheck the last button if existing
+            const lastButton = this.lastButtonTouches[identifier];
+            if (lastButton !== buttonName) {
+                this.changeButtonState(lastButton, false);
+            } // else, lastButton is null or undefined
+
+            if (buttonName) {
+                // mark button as pressed
+                this.changeButtonState(buttonName, true);
+                // set last button in map
+                this.lastButtonTouches[identifier] = buttonName;
+            } else {
+                this.changeButtonState(lastButton, false);
+            }
         }
     }
 
@@ -342,6 +379,7 @@ export default class GamepadLayout extends Vue {
      * Mouse or touch as been released.
      */
     private handlePointerUp(identifier: number) {
+        delete this.pressedPointers[identifier];
         if (this.movingSliders[identifier]) {
             // release slider
             delete this.movingSliders[identifier];
