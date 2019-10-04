@@ -158,7 +158,6 @@ export default class GamepadLayout extends Vue {
     
     @Watch('adjusting')
     private onAdjustChange(val: boolean, oldVal: boolean) {
-        console.log('adjusting changed ', val);
         if (val) {
             this.enableAdjusting();
         } else {
@@ -169,7 +168,6 @@ export default class GamepadLayout extends Vue {
     private enableAdjusting() {
         // add slider for all vertical splits on left side
         let vSplits = $('#gamepadLayout .v-split');
-        console.log(vSplits);
         // add slider between first and second child
         // positioning is defined in gamepad-layout.scss
         const secondChild = vSplits.children().eq(1);
