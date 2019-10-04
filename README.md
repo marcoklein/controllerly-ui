@@ -49,3 +49,7 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+## Graphics
+Graphics by [Kenney](https://www.kenney.nl/assets/game-icons)

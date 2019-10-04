@@ -3,31 +3,42 @@ $borderColor: rgb(173, 191, 230);
 $borderStyle: solid;
 $borderRadius: 4px;
 
+@mixin slider-base {
+    /* Positioning */
+    position: absolute;
+    width: 2em;
+    height: 2em;
+    border-radius: 4em;
+    border-width: 0;
+
+    /* Rendering */
+    background-color: darkcyan;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 #gamepadLayout {
     background-color: $borderColor;
     
     .h-slider {
+        @include slider-base;
+
         cursor: w-resize;
-        border-width: 0;
-        position: absolute;
+        background-image: url("../assets/scrollHorizontal.png");
+        
         top: 10%;
         left: -1em;
-        width: 2em;
-        height: 2em;
-        background-color: darkcyan;
-        border-radius: 4em;
     }
 
     .v-slider {
+        @include slider-base;
+        
         cursor: s-resize;
-        border-width: 0;
-        position: absolute;
+        background-image: url("../assets/scrollVertical.png");
+
         left: 10%;
         top: -1em;
-        width: 2em;
-        height: 2em;
-        background-color: darkcyan;
-        border-radius: 4em;
     }
     
     /* A gamepad layout has various areas that represent
