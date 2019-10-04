@@ -140,7 +140,7 @@ export default class GamepadLayout extends Vue {
     /**
      * Locked sliders, that are currently being dragged.
      */
-    private movingSliders: { [identifier: number]: { startPosition: number, startX: number, startY: number, element: Element }} = {};
+    private movingSliders: { [identifier: number]: { verticalPosition: number, horizontalPosition: number, startX: number, startY: number, element: Element }} = {};
 
     public mounted() {
         // trigger initial adjusting value
@@ -238,13 +238,27 @@ export default class GamepadLayout extends Vue {
         } else if (element && this.adjusting) {
             // check if a slider is touched
             const $element = $(element);
+            let $area = $element.parent().parent();
+            let firstWidth = $area.children().eq(0).width() || 0;
+            let firstHeight = $area.children().eq(0).height() || 0;
+            let parentWidth = $area.width() || 0;
+            let parentHeight = $area.height() || 0;
+
             if ($element.hasClass('h-slider')) {
-                let $area = $element.parent().parent();
-                let firstWidth = $area.children().eq(0).width() || 0;
-                let parentWidth = $area.width() || 0;
                 // lock slider of identifier
                 this.movingSliders[identifier] = {
-                    startPosition: firstWidth / parentWidth,
+                    verticalPosition: $element.position().top / parentHeight,
+                    horizontalPosition: firstWidth / parentWidth,
+                    startX: x,
+                    startY: y,
+                    element: element
+                };
+            } else if ($element.hasClass('v-slider')) {
+                console.log(firstHeight / parentHeight);
+                // lock slider of identifier
+                this.movingSliders[identifier] = {
+                    verticalPosition: firstHeight / parentHeight,
+                    horizontalPosition: $element.position().left / parentWidth,
                     startX: x,
                     startY: y,
                     element: element
@@ -286,30 +300,43 @@ export default class GamepadLayout extends Vue {
             const parent = $element.parent().parent();
             const firstChild = parent.children().eq(0);
             const secondChild = parent.children().eq(1);
+            
+            // calculate
+            const parentWidth = parent.width() || 0;
+            const parentHeight = parent.height() || 0;
+            const deltaXPercentage = deltaX / parentWidth;
+            const deltaYPercentage = deltaY / parentHeight;
+
+            // calculate width related
+            let firstChildWidth = movingSlider.horizontalPosition + deltaXPercentage;
+            // min and max percentages
+            firstChildWidth = firstChildWidth < 0.1 ? 0.1 : firstChildWidth;
+            firstChildWidth = firstChildWidth > 0.9 ? 0.9 : firstChildWidth;
+            // convert to a percentage
+            firstChildWidth *= 100;
+
+            // calculate height related
+            let firstChildHeight = movingSlider.verticalPosition + deltaYPercentage;
+            // min and max percentages
+            firstChildHeight = firstChildHeight < 0.1 ? 0.1 : firstChildHeight;
+            firstChildHeight = firstChildHeight > 0.9 ? 0.9 : firstChildHeight;
+            // convert to a percentage
+            firstChildHeight *= 100;
 
             // set area width
             if ($element.hasClass('h-slider')) {
-                let parentWidth = parent.width() || 0;
-                let percentageDelta = deltaX / parentWidth;
-                // calculate new divider position
-                let firstChildWidth = movingSlider.startPosition + percentageDelta;
-                // min and max percentages
-                if (firstChildWidth < 0.1) {
-                    firstChildWidth = 0.1;
-                } else if (firstChildWidth > 0.9) {
-                    firstChildWidth = 0.9;
-                }
-                // convert to percent
-                firstChildWidth *= 100;
+                firstChildHeight = firstChildHeight > 80 ? 80 : firstChildHeight;
+                $element.css('top', firstChildHeight + '%');
                 // set width
                 firstChild.css('width', firstChildWidth + '%');
                 secondChild.css('width', (100 - firstChildWidth) + '%');
+            } else if ($element.hasClass('v-slider')) {
+                firstChildWidth = firstChildWidth > 80 ? 80 : firstChildWidth;
+                $element.css('left', firstChildWidth + '%');
+                // set width
+                firstChild.css('height', firstChildHeight + '%');
+                secondChild.css('height', (100 - firstChildHeight) + '%');
             }
-            //$element.css('left', deltaX);
-            //$element.css('top', deltaY);
-
-            //movingSlider.startX = x;
-            //movingSlider.startY = y;
 
         }
     }

@@ -22,7 +22,7 @@ $borderRadius: 4px;
         cursor: s-resize;
         border-width: 0;
         position: absolute;
-        left: 0;
+        left: 10%;
         top: -1em;
         width: 2em;
         height: 2em;
@@ -64,7 +64,7 @@ $borderRadius: 4px;
 
         /* Horizontally split next two childs */
         &.h-split {
-            &:nth-child(1),>:nth-child(2) {
+            >:nth-child(1),>:nth-child(2) {
                 position: absolute;
                 width: 100%;
                 height: 50%; // both are of 50% height
