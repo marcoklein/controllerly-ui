@@ -11,15 +11,28 @@
     }
 
     #adjustLock {
+        cursor: pointer;
         position: absolute;
-        //width: 3.5em;
-        //height: 3em;
-        color: white;
+        width: 3em;
+        height: 3em;
         white-space: nowrap;
         text-overflow: clip;
-        //background-color: gray;
+
         top: 4px;
         left: 4px;
+
+        background-image: url(../assets/locked.png);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+
+        &.unlocked {
+            background-image: url(../assets/unlocked.png);
+            /* Use filter functionality to turn image black. */
+            /* filter is unsupported on many browsers */
+            /* the black image version could also be used */
+            filter: invert(100%);
+        }
     }
 
     #menuToggle {

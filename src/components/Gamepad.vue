@@ -3,7 +3,7 @@ div.fullsize
   div#layout.fullsize
     GamepadLayout(v-on:button-event='onButtonEvent' v-bind:adjusting='adjusting')
   div#overlay.fullsize
-    button#adjustLock.btn.btn-primary.btn-sm(v-on:click=('toggleAdjustLock')) {{ adjusting ? 'Lock' : 'Unlock'}}
+    div#adjustLock(v-on:click='toggleAdjustLock' v-bind:class='{unlocked: adjusting}')
     div#menuToggle.v-align.text-center Menu
 
 
