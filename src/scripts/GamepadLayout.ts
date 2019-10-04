@@ -254,7 +254,6 @@ export default class GamepadLayout extends Vue {
                     element: element
                 };
             } else if ($element.hasClass('v-slider')) {
-                console.log(firstHeight / parentHeight);
                 // lock slider of identifier
                 this.movingSliders[identifier] = {
                     verticalPosition: firstHeight / parentHeight,
