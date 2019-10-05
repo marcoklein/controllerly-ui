@@ -1,6 +1,6 @@
 <template lang="pug">
 // TODO use jquery to align content!
-div.container.d-flex.h-100
+div.container.d-flex(style='height: 70%')
   div.row.justify-content-center.align-self-center.w-100
     div.col-12
       h2.text-center Enter a Connection Code

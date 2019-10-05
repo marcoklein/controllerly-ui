@@ -33,7 +33,7 @@ export default class Gamepad extends Vue {
    */
   private onButtonEvent(event: ButtonEvent) {
     // send button event
-    // this.client.sendMessage('buttonEvent', event);
+    this.client.sendMessage('buttonEvent', event);
   }
 
   private toggleAdjustLock() {
