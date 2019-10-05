@@ -53,3 +53,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Graphics
 Graphics by [Kenney](https://www.kenney.nl/assets/game-icons)
+
+Favicons by [RealFaviconGenerator](https://realfavicongenerator.net/)
