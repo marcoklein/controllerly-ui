@@ -1,6 +1,6 @@
 {
   "name": "controllerly-ui",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Intuitive Smartphone Gamepad User Interface for Controllerly.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -48,6 +48,7 @@
     "@vue/cli-plugin-pwa": "^3.11.0",
     "@vue/cli-plugin-typescript": "^3.11.0",
     "@vue/cli-service": "^3.11.0",
+    "genversion": "^2.2.0",
     "pug": "^2.0.4",
     "pug-plain-loader": "^1.0.0",
     "sass": "^1.22.12",
