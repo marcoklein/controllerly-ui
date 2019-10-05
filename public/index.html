@@ -5,7 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>Controllerly | Remote Gamepad for the Smartphone</title>
+    <title>Controllerly | Remote Gamepad for Your Smartphone</title>
+    <script src="./mobile-detect.js"></script>
+    <script>
+      var md = new MobileDetect(window.navigator.userAgent);
+      console.log('mobile? ' + (md.mobile() ? 'yes' : 'no'));
+    </script>
   </head>
   <body>
     <noscript>
