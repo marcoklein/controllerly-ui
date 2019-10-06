@@ -1,6 +1,6 @@
 {
   "name": "controllerly-ui",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Intuitive Smartphone Gamepad User Interface for Controllerly.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
