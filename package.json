@@ -25,7 +25,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "genversion": "genversion src/version.generated.ts --es6 && git add src/version.generated.ts",
-    "version": "npm run genversion && npm run build && git add docs/**/*",
+    "prepare": "npm run genversion && npm run build",
+    "version": "git add docs",
     "postversion": "git push && git push --tags"
   },
   "repository": {
