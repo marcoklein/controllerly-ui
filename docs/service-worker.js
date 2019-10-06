@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.3845989c5749bbb5aa489255d561438e.js"
+  "/precache-manifest.a5bf92a152db351b55c08cc02e25ec6f.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "controllerly-ui"});
