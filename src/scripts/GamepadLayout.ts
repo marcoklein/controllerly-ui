@@ -26,7 +26,7 @@ export enum ButtonEventType {
     SWIPE_DOWN = 'swipeDown'
 }
 
-export type ButtonEvent = {
+export interface ButtonEvent {
     /**
      * Name of the button.
      */
@@ -34,7 +34,7 @@ export type ButtonEvent = {
     type: ButtonEventType;
     pressed: boolean;
     timestamp: number;
-};
+}
 /**
  * Event button type.
  */
@@ -44,13 +44,13 @@ export function createButtonEvent(name: string, type: ButtonEventType, pressed: 
         type,
         pressed,
         timestamp: Date.now()
-    }
+    };
 }
 
 /**
  * Script part of the Gamepad.vue component.
  * It creates and provides a gamepad layout and fires a button-event on button updates.
- * 
+ *
  * Parent components can listen to the button events and process them accordingly.
  */
 @Component({
@@ -59,12 +59,19 @@ export function createButtonEvent(name: string, type: ButtonEventType, pressed: 
     }
 })
 export default class GamepadLayout extends Vue {
-    @Prop() private client!: ControllerlyClient;
-    @Prop() private options!: GamepadOptions;
+
+    /**
+     * Creates html from the gamepad layout configuration.
+     */
+    public get layoutHtml(): string {
+        return layoutConfigToHtml(this.layoutConfig);
+    }
     /**
      * As long as adjusting is true, the user can adjust the gamepad layout.
      */
     @Prop() public adjusting!: boolean;
+    @Prop() private client!: ControllerlyClient;
+    @Prop() private options!: GamepadOptions;
 
 
     /**
@@ -151,15 +158,8 @@ export default class GamepadLayout extends Vue {
         this.onAdjustChange(this.adjusting, !this.adjusting);
     }
 
-    /**
-     * Creates html from the gamepad layout configuration.
-     */
-    public get layoutHtml(): string {
-        return layoutConfigToHtml(this.layoutConfig);
-    }
-
     /* Dynamic adjusting */
-    
+
     @Watch('adjusting')
     private onAdjustChange(val: boolean, oldVal: boolean) {
         if (val) {
@@ -171,20 +171,20 @@ export default class GamepadLayout extends Vue {
 
     private enableAdjusting() {
         // add slider for all vertical splits on left side
-        let vSplits = $('#gamepadLayout .v-split');
+        const vSplits = $('#gamepadLayout .v-split');
         // add slider between first and second child
         // positioning is defined in gamepad-layout.scss
         const secondChild = vSplits.children().eq(1);
         // add slider on second child to adjust width
-        let hSlider = $('<div>');
+        const hSlider = $('<div>');
         hSlider.addClass('h-slider');
         secondChild.append(hSlider);
 
         // add slider
-        let hSplits = $('#gamepadLayout .h-split');
+        const hSplits = $('#gamepadLayout .h-split');
         hSplits.each(function() {
             const secondVChild = $(this).children().eq(1);
-            let vSlider = $('<div>');
+            const vSlider = $('<div>');
             vSlider.addClass('v-slider');
             secondVChild.append(vSlider);
         });
@@ -199,7 +199,7 @@ export default class GamepadLayout extends Vue {
 
     /**
      * Changes the state of the button with the given name.
-     * 
+     *
      * @param buttonName Defined in the config. button-name
      * @param pressed Pressed state.
      */
@@ -241,11 +241,11 @@ export default class GamepadLayout extends Vue {
         } else if (element && this.adjusting) {
             // check if a slider is touched
             const $element = $(element);
-            let $area = $element.parent().parent();
-            let firstWidth = $area.children().eq(0).width() || 0;
-            let firstHeight = $area.children().eq(0).height() || 0;
-            let parentWidth = $area.width() || 0;
-            let parentHeight = $area.height() || 0;
+            const $area = $element.parent().parent();
+            const firstWidth = $area.children().eq(0).width() || 0;
+            const firstHeight = $area.children().eq(0).height() || 0;
+            const parentWidth = $area.width() || 0;
+            const parentHeight = $area.height() || 0;
 
             if ($element.hasClass('h-slider')) {
                 // lock slider of identifier
@@ -254,7 +254,7 @@ export default class GamepadLayout extends Vue {
                     horizontalPosition: firstWidth / parentWidth,
                     startX: x,
                     startY: y,
-                    element: element
+                    element
                 };
                 return;
             } else if ($element.hasClass('v-slider')) {
@@ -264,7 +264,7 @@ export default class GamepadLayout extends Vue {
                     horizontalPosition: $element.position().left / parentWidth,
                     startX: x,
                     startY: y,
-                    element: element
+                    element
                 };
                 return;
             } else {
@@ -311,7 +311,7 @@ export default class GamepadLayout extends Vue {
             const parent = $element.parent().parent();
             const firstChild = parent.children().eq(0);
             const secondChild = parent.children().eq(1);
-            
+
             // calculate
             const parentWidth = parent.width() || 0;
             const parentHeight = parent.height() || 0;
@@ -351,7 +351,7 @@ export default class GamepadLayout extends Vue {
         } else {
             // TODO implement swipe behavior
             // handle button change
-            
+
             // find touched element
             const element = document.elementFromPoint(x, y);
 

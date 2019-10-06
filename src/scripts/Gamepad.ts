@@ -39,5 +39,5 @@ export default class Gamepad extends Vue {
   private toggleAdjustLock() {
     this.adjusting = !this.adjusting;
   }
-  
+
 }

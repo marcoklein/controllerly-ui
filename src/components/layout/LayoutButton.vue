@@ -15,7 +15,7 @@ import { GamepadOptions } from '../../GamepadOptions';
 export default class LayoutButton extends Vue {
   @Prop() private client!: ControllerlyClient;
   @Prop() private options!: GamepadOptions;
-  
+
 }
 </script>
 <style lang="scss">
