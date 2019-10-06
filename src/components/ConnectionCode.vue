@@ -1,19 +1,30 @@
 <template lang="pug">
 // TODO use jquery to align content!
-div.container.d-flex(style='height: 70%')
-  div.row.justify-content-center.align-self-center.w-100
-    div.col-12
-      h2.text-center Enter a Connection Code
-      div.input-group
+div.container
+  div.mt-2
+    h1 Controllerly 
+    h5.text-muted Remote Gamepad for the Smartphone
+
+  div.card.card-primary.bg-light.mt-3
+    div.card-body
+      div.float-left Enter Your Connection Code
+      //div.float-right
+        a.btn.btn-sm.btn-outline-primary(href="https://docs.controllerly.com" role="button") What is this?
+      div.input-group.card-body
         input.form-control(maxLength="5" v-on:keyup.enter="connect" @input="onConnectionCodeChange" v-model='options.connectionCode', placeholder='Connection code')
         div.input-group-append
           button.btn.btn-primary(
             v-on:click='connect'
             v-bind:class=" { disabled: options.connectionCode.length < 5 }")
             | Connect
-      div(v-if='options.connectionTries > 0') Error: 
+      div.alert.alert-danger(v-if='options.connectionTries > 0' role="alert")
         span(v-if='options.connectionError') {{ options.connectionError }}
+
+  div.mt-3.mb-3
+    h5 Let's make gaming social again! 
+    p.text-muted Controllerly is an Open Source Smartphone Gamepad. It leverages the power of WebRTC and allows direct Browser to Browser connection without the need of a server!
   
+    a.btn.btn-outline-primary(href="https://docs.controllerly.com" role="button") More Info
 </template>
 
 <script lang="ts">
@@ -22,7 +33,17 @@ import { GamepadOptions } from '../GamepadOptions';
 import { ControllerlyClient } from 'controllerly-core';
 
 /**
- * User enters the connection code that the server provides.
+ * This is the landing page of controllerly.com!
+ * It is the first visible page to the user!
+ * 
+ * Users get redirected to that page from projects that implement Controllerly.
+ * However, it may also happen that users would like to inform themselves about the Controllerly project.
+ * 
+ * Therefore this page contains a link to the Controllerly documentation page (docs.controllerly.com).
+ * There users can inform themselves about the project.
+ * 
+ * Otherwise, the user simply enters the connection code to connect to a server.
+ * The Gamepad user interface is optimized for smartphone usage.
  */
 @Component
 export default class ConnectionCode extends Vue {
@@ -40,6 +61,8 @@ export default class ConnectionCode extends Vue {
   /**
    * Updated everytime the connection code input field changes.
    * Automatically connects if there are 5 characters.
+   * 
+   * FIXME on smartphone the on change event is not triggered on every input..
    */
   private onConnectionCodeChange() {
     console.log('on change');

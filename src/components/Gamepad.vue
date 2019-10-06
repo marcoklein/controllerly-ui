@@ -14,5 +14,9 @@ export default Gamepad;
 
 </script>
 <style lang="scss" scoped>
+html, body {
+    /* Disable scrolling */
+    overflow: hidden;
+}
 @import '../styles/gamepad.scss';
 </style>
