@@ -1,4 +1,4 @@
-[![Known Vulnerabilities](https://snyk.io//test/github/marcoklein/controllerly-ui/badge.svg?targetFile=package.json)](https://snyk.io//test/github/marcoklein/controllerly-ui?targetFile=package.json)
+[![Known Vulnerabilities](https://snyk.io//test/github/marcoklein/controllerly-ui/badge.svg?targetFile=package.json)](https://snyk.io//test/github/marcoklein/controllerly-ui?targetFile=package.json) [![Greenkeeper badge](https://badges.greenkeeper.io/marcoklein/controllerly-ui.svg)](https://greenkeeper.io/)
 
 # Controllerly-UI
 Intuitive Smartphone Gamepad User Interface for Controllerly.
