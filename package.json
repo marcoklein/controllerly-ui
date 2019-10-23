@@ -45,9 +45,9 @@
   },
   "devDependencies": {
     "@types/jquery": "^3.3.31",
-    "@vue/cli-plugin-pwa": "^3.11.0",
-    "@vue/cli-plugin-typescript": "^3.11.0",
-    "@vue/cli-service": "^3.11.0",
+    "@vue/cli-plugin-pwa": "^4.0.5",
+    "@vue/cli-plugin-typescript": "^4.0.5",
+    "@vue/cli-service": "^4.0.5",
     "genversion": "^2.2.0",
     "pug": "^2.0.4",
     "pug-plain-loader": "^1.0.0",
